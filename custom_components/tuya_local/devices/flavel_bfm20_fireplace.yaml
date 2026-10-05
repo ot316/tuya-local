@@ -1,0 +1,328 @@
+name: Electric fireplace
+products:
+  - id: 3zt3q1celaotizra
+    manufacturer: Flavel
+    model: Proflame Asencio inset (BFM-20)
+entities:
+  - entity: switch
+    icon: "mdi:fireplace"
+    dps:
+      - id: 101
+        type: boolean
+        name: switch
+  - entity: climate
+    translation_key: heater
+    dps:
+      - id: 102
+        type: string
+        name: hvac_mode
+        mapping:
+          - dps_val: "OFF"
+            value: "off"
+          - dps_val: AUTO
+            value: heat
+          - dps_val: HALF
+            value: heat
+            hidden: true
+          - dps_val: FULL
+            value: heat
+            hidden: true
+      - id: 102
+        type: string
+        name: preset_mode
+        mapping:
+          - dps_val: "OFF"
+            value: "off"
+            hidden: true
+          - dps_val: HALF
+            value: low
+          - dps_val: FULL
+            value: high
+          - dps_val: AUTO
+            value: auto
+      - id: 113
+        type: integer
+        name: temperature
+        range:
+          min: 18
+          max: 27
+        mapping:
+          - constraint: temperature_unit
+            conditions:
+              - dps_val: F
+                value_redirect: temp_set_f
+                range:
+                  min: 64
+                  max: 82
+                step: 2
+      - id: 114
+        type: integer
+        name: current_temperature
+        mapping:
+          - constraint: temperature_unit
+            conditions:
+              - dps_val: F
+                value_redirect: temp_cur_f
+      - id: 117
+        type: string
+        name: temperature_unit
+        mapping:
+          - dps_val: F
+            value: F
+          - value: C
+      - id: 115
+        type: integer
+        name: temp_set_f
+        range:
+          min: 64
+          max: 82
+      - id: 116
+        type: integer
+        name: temp_cur_f
+  # Hard heat lock: while on, the heater can't be turned on. Resets to off on
+  # power loss, so it isn't a safety guarantee; the heater itself (dp 102)
+  # resets to OFF on power loss and whenever the fire is switched off and on.
+  - entity: switch
+    name: Flame only
+    icon: "mdi:fire-off"
+    category: config
+    hidden: true
+    dps:
+      - id: 103
+        type: boolean
+        name: switch
+  - entity: number
+    name: Flame speed
+    icon: "mdi:fire"
+    category: config
+    dps:
+      - id: 112
+        type: integer
+        name: value
+        optional: true
+        range:
+          min: 10
+          max: 28
+        mapping:
+          - step: 2
+  # Each light zone has four separate 0-100% colour channels. Tuya Local's
+  # light entity only supports a single colour dp, so they are exposed as
+  # numbers; Home Assistant template lights can combine them into RGBW.
+  - entity: number
+    name: Flame orange
+    icon: "mdi:palette"
+    category: config
+    dps:
+      - id: 106
+        type: integer
+        name: value
+        unit: "%"
+        range:
+          min: 0
+          max: 100
+        mapping:
+          - step: 10
+  - entity: number
+    name: Flame red
+    icon: "mdi:palette"
+    category: config
+    dps:
+      - id: 111
+        type: integer
+        name: value
+        unit: "%"
+        range:
+          min: 0
+          max: 100
+        mapping:
+          - step: 10
+  - entity: number
+    name: Flame green
+    icon: "mdi:palette"
+    category: config
+    dps:
+      - id: 118
+        type: integer
+        name: value
+        unit: "%"
+        range:
+          min: 0
+          max: 100
+        mapping:
+          - step: 10
+  - entity: number
+    name: Flame blue
+    icon: "mdi:palette"
+    category: config
+    dps:
+      - id: 109
+        type: integer
+        name: value
+        unit: "%"
+        range:
+          min: 0
+          max: 100
+        mapping:
+          - step: 10
+  - entity: number
+    name: Ember orange
+    icon: "mdi:palette"
+    category: config
+    dps:
+      - id: 107
+        type: integer
+        name: value
+        unit: "%"
+        range:
+          min: 0
+          max: 100
+        mapping:
+          - step: 10
+  - entity: number
+    name: Ember red
+    icon: "mdi:palette"
+    category: config
+    dps:
+      - id: 119
+        type: integer
+        name: value
+        unit: "%"
+        range:
+          min: 0
+          max: 100
+        mapping:
+          - step: 10
+  - entity: number
+    name: Ember green
+    icon: "mdi:palette"
+    category: config
+    dps:
+      - id: 120
+        type: integer
+        name: value
+        unit: "%"
+        range:
+          min: 0
+          max: 100
+        mapping:
+          - step: 10
+  - entity: number
+    name: Ember blue
+    icon: "mdi:palette"
+    category: config
+    dps:
+      - id: 121
+        type: integer
+        name: value
+        unit: "%"
+        range:
+          min: 0
+          max: 100
+        mapping:
+          - step: 10
+  - entity: number
+    name: Side orange
+    icon: "mdi:palette"
+    category: config
+    dps:
+      - id: 108
+        type: integer
+        name: value
+        unit: "%"
+        range:
+          min: 0
+          max: 100
+        mapping:
+          - step: 10
+  - entity: number
+    name: Side red
+    icon: "mdi:palette"
+    category: config
+    dps:
+      - id: 122
+        type: integer
+        name: value
+        unit: "%"
+        range:
+          min: 0
+          max: 100
+        mapping:
+          - step: 10
+  - entity: number
+    name: Side green
+    icon: "mdi:palette"
+    category: config
+    dps:
+      - id: 123
+        type: integer
+        name: value
+        unit: "%"
+        range:
+          min: 0
+          max: 100
+        mapping:
+          - step: 10
+  - entity: number
+    name: Side blue
+    icon: "mdi:palette"
+    category: config
+    dps:
+      - id: 124
+        type: integer
+        name: value
+        unit: "%"
+        range:
+          min: 0
+          max: 100
+        mapping:
+          - step: 10
+  - entity: number
+    translation_key: timer
+    class: duration
+    category: config
+    hidden: true
+    dps:
+      - id: 105
+        type: integer
+        name: value
+        unit: h
+        range:
+          min: 0
+          max: 24
+  - entity: select
+    translation_key: temperature_unit
+    category: config
+    hidden: true
+    dps:
+      - id: 117
+        type: string
+        name: option
+        mapping:
+          - dps_val: C
+            value: celsius
+          - dps_val: F
+            value: fahrenheit
+  - entity: binary_sensor
+    class: problem
+    category: diagnostic
+    dps:
+      - id: 104
+        type: string
+        name: sensor
+        mapping:
+          - dps_val: "null"
+            value: false
+          - value: true
+      - id: 104
+        type: string
+        name: fault_code
+  # Meaning not fully confirmed: goes false when the heater or the fire is
+  # switched off, true again when the fire is on and flame-only is off.
+  - entity: binary_sensor
+    name: Heater available
+    icon: "mdi:radiator"
+    category: diagnostic
+    dps:
+      - id: 110
+        type: boolean
+        name: sensor
